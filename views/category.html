@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{{TITLE}}</title>
+  <meta name="description" content="{{DESCRIPTION}}">
+  <link rel="canonical" href="{{CANONICAL}}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{TITLE}}">
+  <meta property="og:description" content="{{DESCRIPTION}}">
+  <meta property="og:url" content="{{CANONICAL}}">
+  <meta property="og:site_name" content="{{SITE_NAME}}">
+  <meta property="og:image" content="{{OG_IMAGE}}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0b0d">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/site.css?v={{ASSET_V}}">
+  <script src="/js/site.js?v={{ASSET_V}}" defer></script>
+</head>
+<body data-page="category">
+  <a class="skip-link" href="#videos">Skip to videos</a>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="Home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name" data-bind="site_name">{{SITE_NAME}}</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <span></span><span></span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <a href="/#work">Work</a>
+        <a href="/#about">About</a>
+        <a href="/#services" data-requires="services">Services</a>
+        <a href="/#contact">Contact</a>
+        <a class="btn btn-small btn-accent" href="/#contact">Hire me</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="category-hero">
+      <div class="hero-bg" aria-hidden="true"><div class="hero-glow"></div><div class="hero-grid"></div></div>
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/#work">Portfolio</a></li>
+            <li aria-current="page" id="crumb-current"></li>
+          </ol>
+        </nav>
+        <h1 class="category-title" id="category-title"></h1>
+        <p class="category-lead" id="category-desc"></p>
+        <p class="category-count" id="category-count"></p>
+        <nav class="category-nav category-nav-left" id="category-nav" aria-label="Other categories"></nav>
+      </div>
+    </section>
+
+    <section class="section section-tight" id="videos" aria-label="Videos">
+      <div class="container">
+        <div class="stage" id="stage" hidden>
+          <div class="stage-player" id="stage-player"></div>
+          <aside class="stage-info" aria-live="polite">
+            <div class="stage-meta">
+              <span class="badge" id="stage-platform"></span>
+              <span class="stage-category" id="stage-category"></span>
+            </div>
+            <h2 class="stage-title" id="stage-title"></h2>
+            <p class="stage-client" id="stage-client"></p>
+            <p class="stage-desc" id="stage-desc"></p>
+            <ul class="tags" id="stage-tags"></ul>
+            <div class="stage-actions">
+              <button class="icon-btn" type="button" id="stage-prev" aria-label="Previous video">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+              </button>
+              <span class="stage-count" id="stage-count"></span>
+              <button class="icon-btn" type="button" id="stage-next" aria-label="Next video">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+              </button>
+              <a class="stage-source" id="stage-source" target="_blank" rel="noopener noreferrer" hidden></a>
+            </div>
+          </aside>
+        </div>
+
+        <div class="grid-head" id="grid-head" hidden>
+          <h2 id="grid-title">All videos</h2>
+          <span class="grid-count" id="grid-count"></span>
+        </div>
+        <div class="video-grid" id="video-grid"></div>
+
+        <div class="empty" id="empty-state" hidden>
+          <div class="empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4-2.5z"/></svg>
+          </div>
+          <h3>No videos here yet</h3>
+          <p>New work for this category is coming soon. Browse the other categories in the meantime.</p>
+          <p><br><a class="btn btn-accent" href="/#work">Back to portfolio</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-strip">
+      <div class="container cta-inner">
+        <div>
+          <h2>Like what you see?</h2>
+          <p>Let's talk about your next video.</p>
+        </div>
+        <a class="btn btn-accent" href="/#contact">Start a project</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> <span data-bind="site_name">{{SITE_NAME}}</span>. <span data-bind="footer_text"></span></p>
+      <a href="#top" class="to-top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script type="application/json" id="initial-data">{{INITIAL_DATA}}</script>
+</body>
+</html>

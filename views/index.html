@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{{TITLE}}</title>
+  <meta name="description" content="{{DESCRIPTION}}">
+  <link rel="canonical" href="{{CANONICAL}}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{TITLE}}">
+  <meta property="og:description" content="{{DESCRIPTION}}">
+  <meta property="og:url" content="{{CANONICAL}}">
+  <meta property="og:site_name" content="{{SITE_NAME}}">
+  <meta property="og:image" content="{{OG_IMAGE}}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0b0d">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/site.css?v={{ASSET_V}}">
+  <script src="/js/site.js?v={{ASSET_V}}" defer></script>
+</head>
+<body data-page="home">
+  <a class="skip-link" href="#work">Skip to portfolio</a>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="Home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name" data-bind="site_name">{{SITE_NAME}}</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <span></span><span></span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#services" data-requires="services">Services</a>
+        <a href="#contact">Contact</a>
+        <a class="btn btn-small btn-accent" href="#contact">Hire me</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-glow"></div>
+        <div class="hero-grid"></div>
+      </div>
+      <div class="container hero-inner">
+        <p class="pill" data-requires="availability"><span class="dot" aria-hidden="true"></span><span data-bind="availability"></span></p>
+        <p class="eyebrow"><span data-bind="site_name">{{SITE_NAME}}</span> · <span data-bind="role_title"></span><span data-requires="location"> · <span data-bind="location"></span></span></p>
+        <h1 class="hero-title" data-bind="hero_heading"></h1>
+        <p class="hero-sub" data-bind="hero_subheading"></p>
+        <div class="hero-actions">
+          <a class="btn btn-accent" href="#work" id="hero-watch">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            <span id="hero-watch-label">View my work</span>
+          </a>
+          <a class="btn btn-ghost" href="#contact">Start a project</a>
+        </div>
+        <dl class="stats" id="stats"></dl>
+      </div>
+    </section>
+
+    <section class="section work" id="work" aria-labelledby="work-title">
+      <div class="container">
+        <div class="section-head section-head-row">
+          <div>
+            <p class="kicker">Portfolio</p>
+            <h2 id="work-title">Selected work</h2>
+          </div>
+          <nav class="category-nav" id="category-nav" aria-label="Portfolio categories"></nav>
+        </div>
+
+        <div class="stage" id="stage" hidden>
+          <div class="stage-player" id="stage-player"></div>
+          <aside class="stage-info" aria-live="polite">
+            <div class="stage-meta">
+              <span class="stage-label">Featured</span>
+              <span class="badge" id="stage-platform"></span>
+            </div>
+            <h3 class="stage-title" id="stage-title"></h3>
+            <p class="stage-client" id="stage-client"></p>
+            <p class="stage-desc" id="stage-desc"></p>
+            <ul class="tags" id="stage-tags"></ul>
+            <div class="stage-actions">
+              <a class="btn btn-ghost btn-small" id="stage-category-link" hidden></a>
+              <a class="stage-source" id="stage-source" target="_blank" rel="noopener noreferrer" hidden></a>
+            </div>
+          </aside>
+        </div>
+
+        <div class="category-sections" id="category-sections"></div>
+
+        <div class="empty" id="empty-state" hidden>
+          <div class="empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4-2.5z"/></svg>
+          </div>
+          <h3>New work is on the way</h3>
+          <p>The portfolio is being updated. Check back soon or get in touch to see recent edits.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="container about-inner">
+        <div class="about-photo" id="about-photo"></div>
+        <div class="about-copy">
+          <p class="kicker">About</p>
+          <h2 id="about-title" data-bind="about_heading"></h2>
+          <div class="about-text" id="about-text"></div>
+          <div class="skill-block" data-requires="skills">
+            <h3>What I bring</h3>
+            <ul class="chips" id="skills"></ul>
+          </div>
+          <div class="skill-block" data-requires="software">
+            <h3>Tools</h3>
+            <ul class="chips chips-muted" id="software"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section services" id="services" aria-labelledby="services-title" data-requires="services">
+      <div class="container">
+        <div class="section-head">
+          <p class="kicker">Services</p>
+          <h2 id="services-title">How I can help</h2>
+        </div>
+        <div class="service-grid" id="service-grid"></div>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="container contact-inner">
+        <div class="contact-copy">
+          <p class="kicker">Contact</p>
+          <h2 id="contact-title" data-bind="contact_heading"></h2>
+          <p class="contact-text" data-bind="contact_text"></p>
+          <div class="contact-links">
+            <a class="contact-email" id="contact-email" hidden></a>
+            <a class="btn btn-ghost" id="booking-link" target="_blank" rel="noopener noreferrer" hidden>Book a call</a>
+          </div>
+          <ul class="socials" id="socials" aria-label="Social profiles"></ul>
+        </div>
+
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="field-row">
+            <label class="field">
+              <span>Name</span>
+              <input name="name" type="text" autocomplete="name" maxlength="100" required>
+            </label>
+            <label class="field">
+              <span>Email</span>
+              <input name="email" type="email" autocomplete="email" maxlength="254" required>
+            </label>
+          </div>
+          <label class="field">
+            <span>Subject <em>(optional)</em></span>
+            <input name="subject" type="text" maxlength="150">
+          </label>
+          <label class="field">
+            <span>Project details</span>
+            <textarea name="message" rows="6" minlength="10" maxlength="5000" required placeholder="Channel / brand, type of videos, quantity, deadline, budget…"></textarea>
+          </label>
+          <label class="hp" aria-hidden="true">Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+          <button class="btn btn-accent btn-block" type="submit">Send message</button>
+          <p class="form-status" id="form-status" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> <span data-bind="site_name">{{SITE_NAME}}</span>. <span data-bind="footer_text"></span></p>
+      <a href="#top" class="to-top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <dialog class="lightbox" id="lightbox" aria-labelledby="lb-title">
+    <div class="lb-inner">
+      <div class="lb-player" id="lb-player"></div>
+      <div class="lb-bar">
+        <div class="lb-text">
+          <p class="lb-meta"><span class="badge" id="lb-platform"></span> <span id="lb-category"></span></p>
+          <h3 id="lb-title"></h3>
+          <p class="lb-client" id="lb-client"></p>
+        </div>
+        <div class="lb-controls">
+          <button class="icon-btn" type="button" id="lb-prev" aria-label="Previous video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <span class="stage-count" id="lb-count"></span>
+          <button class="icon-btn" type="button" id="lb-next" aria-label="Next video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+          <a class="btn btn-ghost btn-small" id="lb-category-link">View category</a>
+        </div>
+      </div>
+      <button class="lb-close" type="button" id="lb-close" aria-label="Close video">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+  </dialog>
+
+  <script type="application/json" id="initial-data">{{INITIAL_DATA}}</script>
+</body>
+</html>

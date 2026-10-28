@@ -1,0 +1,24 @@
+{
+  "name": "video-editor-portfolio",
+  "version": "1.0.0",
+  "description": "Dynamic portfolio website with a secure admin panel for video editors (YouTube, Shorts, Instagram Reels, TikTok, Vimeo and uploaded videos).",
+  "main": "server.js",
+  "private": true,
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.js",
+    "dev": "node --env-file-if-exists=.env --watch server.js",
+    "create-admin": "node --env-file-if-exists=.env scripts/create-admin.js",
+    "seed-demo": "node --env-file-if-exists=.env scripts/seed-demo.js",
+    "test": "node --test --test-concurrency=1 \"test/**/*.test.js\""
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
+    "helmet": "^8.3.0",
+    "multer": "^2.5.0"
+  }
+}

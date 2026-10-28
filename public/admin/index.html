@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="same-origin">
+  <title>Admin · Portfolio</title>
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/admin/admin.css">
+  <script src="/admin/admin.js" defer></script>
+</head>
+<body>
+  <!-- Sign in -->
+  <main class="login" id="login-view" hidden>
+    <form class="login-card" id="login-form" novalidate>
+      <div class="login-brand"><span class="brand-mark" aria-hidden="true"></span> Portfolio admin</div>
+      <h1>Sign in</h1>
+      <p class="muted">Manage your videos, categories and site content.</p>
+      <label class="field">
+        <span>Username</span>
+        <input name="username" autocomplete="username" maxlength="64" required autofocus>
+      </label>
+      <label class="field">
+        <span>Password</span>
+        <input name="password" type="password" autocomplete="current-password" maxlength="256" required>
+      </label>
+      <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+      <p class="form-error" id="login-error" role="alert"></p>
+    </form>
+  </main>
+
+  <!-- App -->
+  <div class="app" id="app-view" hidden>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand"><span class="brand-mark" aria-hidden="true"></span><span>Portfolio admin</span></div>
+      <nav class="sidebar-nav" aria-label="Admin">
+        <a href="#dashboard" data-view="dashboard"><span class="i" aria-hidden="true"></span>Dashboard</a>
+        <a href="#portfolio" data-view="portfolio"><span class="i" aria-hidden="true"></span>Portfolio</a>
+        <a href="#videos" data-view="videos" class="sub"><span class="i" aria-hidden="true"></span>All videos</a>
+        <a href="#settings" data-view="settings"><span class="i" aria-hidden="true"></span>Site content</a>
+        <a href="#messages" data-view="messages"><span class="i" aria-hidden="true"></span>Messages <span class="nav-badge" id="unread-badge" hidden></span></a>
+        <a href="#account" data-view="account"><span class="i" aria-hidden="true"></span>Account</a>
+      </nav>
+      <div class="sidebar-foot">
+        <a class="btn btn-ghost btn-block" href="/" target="_blank" rel="noopener">View website ↗</a>
+        <p class="muted small">Signed in as <strong id="whoami"></strong></p>
+        <button class="btn btn-text btn-block" type="button" id="logout-btn">Sign out</button>
+      </div>
+    </aside>
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" type="button" id="menu-btn" aria-label="Toggle menu" aria-controls="sidebar" aria-expanded="false">☰</button>
+        <h1 id="view-title">Dashboard</h1>
+        <div class="topbar-actions" id="topbar-actions"></div>
+      </header>
+      <section class="content" id="content" tabindex="-1"></section>
+    </div>
+  </div>
+
+  <!-- Video editor -->
+  <dialog class="modal modal-wide" id="video-dialog" aria-labelledby="video-dialog-title">
+    <form id="video-form" novalidate>
+      <header class="modal-head">
+        <h2 id="video-dialog-title">Add video</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Close">✕</button>
+      </header>
+      <div class="modal-body video-editor">
+        <div class="editor-main">
+          <div class="segmented" role="radiogroup" aria-label="Video source">
+            <label><input type="radio" name="sourceType" value="link" checked><span>Paste a link</span></label>
+            <label><input type="radio" name="sourceType" value="upload"><span>Upload a file</span></label>
+          </div>
+
+          <div class="source-pane" id="pane-link">
+            <label class="field">
+              <span>Video link</span>
+              <input name="url" type="url" inputmode="url" maxlength="600" placeholder="https://www.youtube.com/shorts/… · instagram.com/reel/… · tiktok.com/@user/video/…">
+              <small class="hint">YouTube, YouTube Shorts, Instagram Reels/posts, TikTok and Vimeo links are supported.</small>
+            </label>
+            <p class="parse-status" id="parse-status" aria-live="polite"></p>
+          </div>
+
+          <div class="source-pane" id="pane-upload" hidden>
+            <label class="dropzone" id="dropzone">
+              <input name="video" type="file" accept="video/mp4,video/webm,video/quicktime,.mp4,.mov,.webm,.m4v">
+              <span class="dz-title">Drop a video here or <u>browse</u></span>
+              <span class="dz-sub" id="dz-sub">MP4, MOV or WebM</span>
+            </label>
+          </div>
+
+          <div class="field-grid">
+            <label class="field span-2">
+              <span>Title *</span>
+              <input name="title" maxlength="150" required>
+            </label>
+            <label class="field">
+              <span>Category *</span>
+              <select name="categoryId" id="video-category" required></select>
+            </label>
+            <label class="field">
+              <span>Format</span>
+              <select name="orientation">
+                <option value="">Auto-detect</option>
+                <option value="landscape">Landscape 16:9</option>
+                <option value="portrait">Vertical 9:16</option>
+                <option value="square">Square 1:1</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Client / channel</span>
+              <input name="client" maxlength="100">
+            </label>
+            <label class="field">
+              <span>Tags <small class="muted">(comma separated)</small></span>
+              <input name="tags" maxlength="300" placeholder="Motion graphics, Sound design">
+            </label>
+            <label class="field span-2">
+              <span>Description</span>
+              <textarea name="description" rows="4" maxlength="3000" placeholder="What was the brief? What did you do? Results?"></textarea>
+            </label>
+          </div>
+
+          <div class="toggles">
+            <label class="switch"><input type="checkbox" name="published" checked><span class="track"></span><span>Published (visible on the website)</span></label>
+            <label class="switch"><input type="checkbox" name="featured"><span class="track"></span><span>Featured — play this first in its category</span></label>
+          </div>
+        </div>
+
+        <aside class="editor-side">
+          <p class="label">Preview</p>
+          <div class="preview" id="video-preview"><span class="muted">Paste a link or choose a file to preview it here.</span></div>
+          <p class="label">Thumbnail</p>
+          <div class="thumb-box">
+            <div class="thumb-preview" id="thumb-preview"><span class="muted small">Automatic</span></div>
+            <div class="thumb-actions">
+              <label class="btn btn-ghost btn-small file-btn">Upload image<input name="thumbnail" type="file" accept="image/jpeg,image/png,image/webp,image/gif"></label>
+              <button class="btn btn-text btn-small" type="button" id="thumb-reset" hidden>Use automatic</button>
+              <small class="hint" id="thumb-hint">YouTube thumbnails are automatic. For Instagram, upload a cover image.</small>
+            </div>
+          </div>
+        </aside>
+      </div>
+      <footer class="modal-foot">
+        <div class="progress" id="upload-progress" hidden><div class="progress-bar" id="upload-bar"></div><span id="upload-pct">0%</span></div>
+        <p class="form-error" id="video-error" role="alert"></p>
+        <button class="btn btn-ghost" type="button" data-close>Cancel</button>
+        <button class="btn btn-primary" type="submit" id="video-submit">Save video</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Category editor -->
+  <dialog class="modal" id="category-dialog" aria-labelledby="category-dialog-title">
+    <form id="category-form" novalidate>
+      <header class="modal-head">
+        <h2 id="category-dialog-title">New category</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Close">✕</button>
+      </header>
+      <div class="modal-body">
+        <label class="field"><span>Name *</span><input name="name" maxlength="60" required placeholder="e.g. Podcasts"></label>
+        <label class="field"><span>Description</span><textarea name="description" rows="3" maxlength="300" placeholder="Shown on the website under the category tabs."></textarea></label>
+      </div>
+      <footer class="modal-foot">
+        <p class="form-error" id="category-error" role="alert"></p>
+        <button class="btn btn-ghost" type="button" data-close>Cancel</button>
+        <button class="btn btn-primary" type="submit">Save</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Delete category -->
+  <dialog class="modal" id="delete-category-dialog" aria-labelledby="delete-category-title">
+    <form id="delete-category-form" novalidate>
+      <header class="modal-head">
+        <h2 id="delete-category-title">Delete category?</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Close">✕</button>
+      </header>
+      <div class="modal-body">
+        <p class="muted" id="delete-category-text"></p>
+        <div class="choice-list">
+          <label class="choice">
+            <input type="radio" name="mode" value="move" checked>
+            <span><strong>Move the videos to another category</strong>
+              <select name="target" aria-label="Target category"></select></span>
+          </label>
+          <label class="choice danger">
+            <input type="radio" name="mode" value="delete">
+            <span><strong>Delete the category and all <span id="delete-category-count"></span> videos</strong>
+              <small class="muted">Uploaded files are removed permanently.</small></span>
+          </label>
+        </div>
+      </div>
+      <footer class="modal-foot">
+        <p class="form-error" id="delete-category-error" role="alert"></p>
+        <button class="btn btn-ghost" type="button" data-close>Cancel</button>
+        <button class="btn btn-danger" type="submit">Delete category</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Confirm -->
+  <dialog class="modal modal-small" id="confirm-dialog" aria-labelledby="confirm-title">
+    <form method="dialog">
+      <div class="modal-body">
+        <h2 id="confirm-title">Are you sure?</h2>
+        <p class="muted" id="confirm-text"></p>
+      </div>
+      <footer class="modal-foot">
+        <button class="btn btn-ghost" value="cancel">Cancel</button>
+        <button class="btn btn-danger" value="ok" id="confirm-ok">Delete</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+</body>
+</html>
